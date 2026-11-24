@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Lettershop Production Calculator</title>
+<title>Blu Print Production Time Calculator</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF8AAABABAMAAACO4raIAAAAMFBMVEX////+///+/v/9/f7z9fzk6Pl2i98YPckUOskHLsYBKsQAKsQCKcQAKcQAJcMAH8F2/ShfAAAC2UlEQVR42u2XT0gUURzHv/PHCMJ21j/YpRo1ohRjdUw0PHRQpEAIwpBOHoKtKOjUH7qIwUKHPInCGiFkh0JxQYhSQ0GwMNcGxSBjdVYpzFp3dCPD9c3rsLvtLMzLGaGb7zK/N7zP+/7ee7/3m99wIThqMREI2h8ueMCF4LYPUD0mgvjtA/xFiOTglG4byGuJicCPMdtAAyACfIVdCQmACBhrmk1Azgd4OGx7gFPALaVtjhWSosmOmuMyakOhqMjaZijwQhNea6mwqpc+aQWetRwalhcLjXZiqXC1NW0fugNwd+Fr3V8NXyvDpWFT1NJhgJPAAxcyd9K8aMFkcwIQ8Ua9dNNLvQa1BgDkFoNOpzqTkztsKyCEACimNKLQdSmisYFgfSFot0dN9E7LRj+ArCbaxwCkSzW3sIUnKf9edA4Y4PnnmwPEGlivOd9PfnbE1YQEjSRex1XGtnITl4+TXy3POmeTfS75lFlr2N7njSLYPteoqcxozQBEnx/IypWPzdgLb3rms1JRXDpf0haGPQXXYLYO4WOPYffG6WUA6NHepUbZwRU14ksTkJzcabf+j/FWAN1F1tAdARuSKzNn7wAIws0a3STBaexzkGYP65DD2WScAAClnsIQygp0psJM47KikGuz0eTU2eVhRZmrHmcpcF869TFUPXraUaYC4BfB1Y7Be3+Z6dL2t6p87mSwuVdP7u+rqvycroDrBAOgYsk9CVsv+0YNgICU3i59CPT8ro2zkvE53wG//2vD+1MA6oCNlSt+f6B5NJfl0vzK27YH6BoaJ8BWN6AtXe/CuxuB7oglYHBvXEOj867vg4c1YErSVBx5vCatBipHKMmY9mz6KIsTFctffz0Ayk1n3rCqml0qQkjwIKIm7AXAmFFAPvCyoVmvYQEgwbQNwAgCMBb2vtP/HRABPsculSrhph0WiXl1tgE3IAoblQ5WHNtNKY0Rp8W6s9+BPxmj+13DkgQBAAAAAElFTkSuQmCC">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -84,13 +84,13 @@
 <body>
   <header class="top">
     <img class="logo" alt="blü" src="data:image/png;base64,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">
-    <div><div class="t">Lettershop Production Calculator</div><div class="s">Production benchmarks</div></div>
+    <div><div class="t">Blu Print Production Time Calculator</div><div class="s">Production benchmarks</div></div>
     <div class="grow"></div>
     <button class="btn ghost" id="reset" type="button">Reset</button>
   </header>
 
   <main class="hero">
-    <h1>Production time calculator</h1>
+    <h1>Blu Print Production Time Calculator</h1>
     <p>Enter your quantity and units per sheet to get the hours to budget in Workamajig.</p>
 
     <div class="steps">
@@ -141,7 +141,7 @@
   var DEF={print:1400,coat:3000,fold:7500,ins1:3500,ins2:3000,hpd:8,
            coatSetup:0.75,foldSetup:0.75,insSetup:0.25,cutPct:0.8};
   var B=JSON.parse(JSON.stringify(DEF));
-  var on={print:true,coat:true,cut:true,fold:true,ins1:false,ins2:false};
+  var on={print:true,cut:true,fold:true,ins1:false,ins2:false};
   var $=function(i){return document.getElementById(i)};
   var fmt=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})};
   var num=function(s){var n=parseFloat(String(s).replace(/[^0-9.]/g,''));return isFinite(n)?n:NaN};
@@ -162,8 +162,7 @@
 
   var OPS=[
     {k:'print',g:'Press',n:'Print time',d:function(){return 'HP Indigo 7600 &ndash; '+fmt(B.print)+' sheets per hour'}},
-    {k:'coat',g:'Finishing',n:'Coat time',d:function(){return 'UV coating &ndash; '+fmt(B.coat)+' sheets per hour + 45 min setup/cleanup'}},
-    {k:'cut',n:'Cut time',d:function(){return 'Cutting &ndash; '+Math.round(B.cutPct*100)+'% of coating time (dependent on saturation)'}},
+    {k:'cut',g:'Finishing',n:'Cut time',d:function(){return 'Cutting &ndash; '+Math.round(B.cutPct*100)+'% of UV coating time (dependent on saturation)'}},
     {k:'fold',n:'Fold time',d:function(){return 'Folding &ndash; '+fmt(B.fold)+' pieces per hour + 45 min setup'}},
     {k:'ins1',g:'Inserting',n:'Inserting &ndash; letter only (#10)',d:function(){return fmt(B.ins1)+' pieces per hour + 15 min setup'}},
     {k:'ins2',n:'Inserting &ndash; letter w/ insert (#10)',d:function(){return fmt(B.ins2)+' pieces per hour + 15 min setup'}}
@@ -197,7 +196,7 @@
     });
     h+='<tr class="total"><td></td><td style="text-align:left">Total (checked operations)</td><td>'+fmt(total,2)+'</td><td>'+hm(total)+'</td><td>'+fmt(days(total),2)+'</td></tr>';
     $('rows').innerHTML=h;
-    $('sheetNote').innerHTML='Print, coat and cut run on <b>sheets</b> (quantity &divide; ups). Folding and inserting run on <b>mail pieces</b>. Days are hours &divide; '+B.hpd+' hours per day, rounded to 2 decimals.';
+    $('sheetNote').innerHTML='Print and cut run on <b>sheets</b> (quantity &divide; ups). Folding and inserting run on <b>mail pieces</b>. Days are hours &divide; '+B.hpd+' hours per day, rounded to 2 decimals.';
     window._last={q:q,u:u,c:c,total:total};
   }
 
@@ -206,7 +205,7 @@
     if(el.dataset.built)return;el.dataset.built=1;
     var rows=[
       ['print','HP Indigo 7600','sheets per hour (1,800 EPM; 1,400 4cp)'],
-      ['coat','UV coating','sheets per hour + 45 minutes setup/cleanup'],
+      ['coat','UV coating (basis for cut time)','sheets per hour + 45 minutes setup/cleanup'],
       ['fold','Folding','pieces per hour + 45 minutes setup'],
       ['ins1','Inserting &ndash; letter only','pieces per hour + 15 minutes setup'],
       ['ins2','Inserting &ndash; letter w/ insert','pieces per hour + 15 minutes setup'],
@@ -232,7 +231,7 @@
   $('rows').addEventListener('change',function(e){var k=e.target.dataset.k;if(!k)return;on[k]=e.target.checked;
     if(k==='ins1'&&on.ins1)on.ins2=false; if(k==='ins2'&&on.ins2)on.ins1=false; render()});
   $('reset').onclick=function(){$('qty').value='';$('ups').value='';B=JSON.parse(JSON.stringify(DEF));
-    on={print:true,coat:true,cut:true,fold:true,ins1:false,ins2:false};
+    on={print:true,cut:true,fold:true,ins1:false,ins2:false};
     var el=$('bm');el.dataset.built='';el.innerHTML='';syncSeg();render();$('qty').focus()};
   $('print').onclick=function(){window.print()};
   $('copy').onclick=function(){
