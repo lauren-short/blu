@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lettershop Production Calculator</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF8AAABABAMAAACO4raIAAAAMFBMVEX////+///+/v/9/f7z9fzk6Pl2i98YPckUOskHLsYBKsQAKsQCKcQAKcQAJcMAH8F2/ShfAAAC2UlEQVR42u2XT0gUURzHv/PHCMJ21j/YpRo1ohRjdUw0PHRQpEAIwpBOHoKtKOjUH7qIwUKHPInCGiFkh0JxQYhSQ0GwMNcGxSBjdVYpzFp3dCPD9c3rsLvtLMzLGaGb7zK/N7zP+/7ee7/3m99wIThqMREI2h8ueMCF4LYPUD0mgvjtA/xFiOTglG4byGuJicCPMdtAAyACfIVdCQmACBhrmk1Azgd4OGx7gFPALaVtjhWSosmOmuMyakOhqMjaZijwQhNea6mwqpc+aQWetRwalhcLjXZiqXC1NW0fugNwd+Fr3V8NXyvDpWFT1NJhgJPAAxcyd9K8aMFkcwIQ8Ua9dNNLvQa1BgDkFoNOpzqTkztsKyCEACimNKLQdSmisYFgfSFot0dN9E7LRj+ArCbaxwCkSzW3sIUnKf9edA4Y4PnnmwPEGlivOd9PfnbE1YQEjSRex1XGtnITl4+TXy3POmeTfS75lFlr2N7njSLYPteoqcxozQBEnx/IypWPzdgLb3rms1JRXDpf0haGPQXXYLYO4WOPYffG6WUA6NHepUbZwRU14ksTkJzcabf+j/FWAN1F1tAdARuSKzNn7wAIws0a3STBaexzkGYP65DD2WScAAClnsIQygp0psJM47KikGuz0eTU2eVhRZmrHmcpcF869TFUPXraUaYC4BfB1Y7Be3+Z6dL2t6p87mSwuVdP7u+rqvycroDrBAOgYsk9CVsv+0YNgICU3i59CPT8ro2zkvE53wG//2vD+1MA6oCNlSt+f6B5NJfl0vzK27YH6BoaJ8BWN6AtXe/CuxuB7oglYHBvXEOj867vg4c1YErSVBx5vCatBipHKMmY9mz6KIsTFctffz0Ayk1n3rCqml0qQkjwIKIm7AXAmFFAPvCyoVmvYQEgwbQNwAgCMBb2vtP/HRABPsculSrhph0WiXl1tgE3IAoblQ5WHNtNKY0Rp8W6s9+BPxmj+13DkgQBAAAAAElFTkSuQmCC">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--navy:#002855;--ink:#1c2733;--mut:#667085;--line:#e3e8ef;--bg:#f2f5f9;--accent:#0a4fb4;--ok:#0f7b4a;--okbg:#e6f6ee;--warn:#9a5b00;--warnbg:#fff4de;--bad:#b42318;--badbg:#fee4e2}
+  *{box-sizing:border-box} [hidden]{display:none!important}
+  html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Gotham,"Gotham Book",Inter,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+  .top{display:flex;align-items:center;gap:12px;padding:12px 24px;background:#fff;border-bottom:1px solid var(--line)}
+  .top .logo{height:40px;width:auto;display:block}
+  .top .t{font-weight:700;font-size:16px;letter-spacing:.2px;color:var(--navy)} .top .s{font-size:12px;color:var(--mut);margin-top:1px;text-transform:uppercase;letter-spacing:.06em}
+  .top .grow{flex:1}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:9px;border:1px solid var(--line);background:#fff;color:var(--ink);font:600 13px/1 inherit;font-family:inherit;cursor:pointer;white-space:nowrap}
+  .btn:hover:not(:disabled){border-color:#c3ccd8;background:#f7f9fc}
+  .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff;padding:0 22px}
+  .btn.primary:hover:not(:disabled){background:#003a7a;border-color:#003a7a}
+  .btn.ghost{border-color:var(--navy);color:var(--navy)} .btn.ghost:hover:not(:disabled){background:#eef3fb}
+  .btn.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .btn.on:hover:not(:disabled){background:#003a7a;border-color:#003a7a}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
+  .seg .btn{border:0;border-radius:0;border-right:1px solid var(--line);height:34px;padding:0 13px} .seg .btn:last-child{border-right:0}
+  .seg.full{display:flex;width:100%} .seg.full .btn{flex:1}
+  .chip{display:inline-flex;align-items:center;height:28px;padding:0 11px;border-radius:999px;font-size:12px;font-weight:600}
+  .chip.ok{background:var(--okbg);color:var(--ok)} .chip.warn{background:var(--warnbg);color:var(--warn)} .chip.info{background:#eaf0fa;color:var(--navy)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+
+  .hero{display:flex;flex-direction:column;align-items:center;padding:44px 24px 72px;text-align:center}
+  .hero h1{margin:0 0 8px;font-size:32px;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;font-weight:700;font-family:Gotham,"Gotham Book",Montserrat,Arial,Helvetica,sans-serif}
+  .hero > p{margin:0 0 32px;color:var(--mut);font-size:15px}
+  .steps{display:flex;flex-direction:column;gap:18px;width:100%;max-width:880px;text-align:left}
+  .step{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 1px 2px rgba(16,24,40,.06),0 10px 30px rgba(16,24,40,.08);transition:opacity .15s}
+  .step.locked{opacity:.5;box-shadow:0 1px 2px rgba(16,24,40,.04)} .step.locked .sbody{display:none}
+  .shead{display:flex;align-items:center;gap:14px;padding:20px 26px}
+  .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+  .step.locked .num{background:#c4cedb} .step.done .num{background:var(--ok)}
+  .shead h2{margin:0;font-size:18px;color:var(--navy)} .shead p{margin:3px 0 0;font-size:13px;color:var(--mut);line-height:1.4}
+  .shead .grow{flex:1;min-width:0}
+  .sbody{padding:0 26px 26px 74px;display:flex;flex-direction:column;gap:14px}
+  .note{font-size:12.5px;color:var(--mut);line-height:1.5}
+  .lbl{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.2px}
+  .rowbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .srccol{border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;background:#fff}
+  .srcname{font-size:15px;font-weight:700;color:var(--navy)}
+  .field{height:44px;width:100%;border:1px solid var(--line);border-radius:9px;padding:0 14px;font:700 20px/1 inherit;font-family:inherit;color:var(--navy);background:#fff;font-variant-numeric:tabular-nums}
+  .field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px #cfe0f7}
+  .field.sm{height:36px;width:90px;font-size:14px;padding:0 10px}
+  .field.bad{border-color:var(--bad);box-shadow:0 0 0 3px var(--badbg)}
+  .errbox{padding:10px 14px;border-radius:9px;background:var(--badbg);color:var(--bad);font-size:13px;font-weight:500;line-height:1.45}
+
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .tile{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#f8fafd}
+  .tile .k{font-size:11.5px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.05em} .tile .v{font-size:22px;font-weight:700;color:var(--navy);margin-top:2px;font-variant-numeric:tabular-nums}
+  .tile .u{font-size:12px;color:var(--mut);margin-top:1px}
+  .tile.hl{background:var(--navy);border-color:var(--navy)} .tile.hl .k,.tile.hl .u{color:rgba(255,255,255,.72)} .tile.hl .v{color:#fff}
+
+  .tbl{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .tbl table{width:100%;border-collapse:collapse;font-size:13px}
+  .tbl th{background:#f4f6fa;text-align:right;padding:9px 12px;color:var(--mut);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line)}
+  .tbl td{padding:10px 12px;text-align:right;border-bottom:1px solid #f0f2f7;font-variant-numeric:tabular-nums;vertical-align:middle}
+  .tbl tr:last-child td{border-bottom:0}
+  .tbl th:first-child,.tbl td:first-child{text-align:center;width:38px;padding-right:0}
+  .tbl th:nth-child(2),.tbl td:nth-child(2){text-align:left}
+  .tbl td:nth-child(2) b{display:block;color:var(--navy);font-size:13.5px} .tbl td:nth-child(2) span{display:block;font-size:11.5px;color:var(--mut);margin-top:2px;line-height:1.35}
+  .tbl td.hrs{font-weight:700;color:var(--navy);font-size:15px}
+  .tbl tr.off td{opacity:.4}
+  .tbl tr.group td{background:#f8fafd;text-align:left;font-size:11.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.05em;padding:7px 12px}
+  .tbl tr.total td{background:#eef3fb;font-weight:700;color:var(--navy);font-size:15px}
+  .tbl input[type=checkbox],.tbl input[type=radio]{accent-color:var(--navy);width:16px;height:16px;cursor:pointer;margin:0}
+
+  details.prev{border:1px solid var(--line);border-radius:12px;background:#fff} details.prev summary{cursor:pointer;padding:10px 14px;font-size:13px;font-weight:600;color:var(--accent)}
+  details.prev .in{padding:4px 14px 14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+  .bm{display:grid;grid-template-columns:1fr 100px 1fr;gap:10px;align-items:center;font-size:13px}
+  .bm .n{font-weight:700;color:var(--navy)} .bm .d{color:var(--mut);font-size:12px}
+  .okbox{padding:10px 14px;border-radius:9px;background:var(--okbg);color:var(--ok);font-size:13px;font-weight:600}
+  .foot{font-size:12px;color:var(--mut);text-align:center;margin-top:6px}
+  @media (max-width:760px){.cols2,.tiles{grid-template-columns:1fr} .sbody{padding-left:26px} .hero h1{font-size:24px} .top{padding:10px 16px} .bm{grid-template-columns:1fr 90px} .bm .d{grid-column:1/-1} .tbl th:nth-child(4),.tbl td:nth-child(4){display:none}}
+  @media print{.top .btn,details.prev,.noprint{display:none!important} body{background:#fff} .step{box-shadow:none}}
+</style>
+</head>
+<body>
+  <header class="top">
+    <img class="logo" alt="blü" src="data:image/png;base64,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">
+    <div><div class="t">Lettershop Production Calculator</div><div class="s">Production benchmarks</div></div>
+    <div class="grow"></div>
+    <button class="btn ghost" id="reset" type="button">Reset</button>
+  </header>
+
+  <main class="hero">
+    <h1>Production time calculator</h1>
+    <p>Enter your quantity and units per sheet to get the hours to budget in Workamajig.</p>
+
+    <div class="steps">
+      <section class="step" id="st1">
+        <div class="shead"><span class="num">1</span><div class="grow"><h2>Enter your mailing</h2><p>Total quantity of the mailing and how many pieces come off each sheet.</p></div></div>
+        <div class="sbody">
+          <div class="cols2">
+            <div class="srccol">
+              <div><div class="srcname">Total quantity of mailing</div><div class="note">Step 1 &ndash; number of mail pieces.</div></div>
+              <input class="field" id="qty" type="text" inputmode="numeric" placeholder="e.g. 40,000" autocomplete="off">
+            </div>
+            <div class="srccol">
+              <div><div class="srcname">Units per sheet (&ldquo;ups&rdquo;)</div><div class="note">Step 2 &ndash; pieces per sheet. Use 1 for single-piece items.</div></div>
+              <input class="field" id="ups" type="text" inputmode="numeric" placeholder="e.g. 3" autocomplete="off">
+            </div>
+          </div>
+          <div class="rowbtns">
+            <span class="lbl">Print rate</span>
+            <div class="seg" id="rateSeg"><button class="btn on" data-r="1400" type="button">4/color process &ndash; 1,400 / hr</button><button class="btn" data-r="1800" type="button">EPM &ndash; 1,800 / hr</button></div>
+          </div>
+          <div id="msg"></div>
+        </div>
+      </section>
+
+      <section class="step locked" id="st2">
+        <div class="shead"><span class="num">2</span><div class="grow"><h2>Hours to budget in Workamajig</h2><p>Check the operations this job uses. The total updates as you go.</p></div></div>
+        <div class="sbody">
+          <div class="tiles" id="tiles"></div>
+          <div class="tbl"><table>
+            <thead><tr><th></th><th>Operation</th><th>Hours</th><th>Hrs : Min</th><th>Days</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table></div>
+          <div class="note" id="sheetNote"></div>
+          <details class="prev"><summary>Benchmarks &amp; settings</summary>
+            <div class="in" id="bm"></div>
+          </details>
+          <div class="rowbtns noprint"><button class="btn primary" id="copy" type="button">Copy summary</button><button class="btn" id="print" type="button">Print</button><span class="note" id="copied"></span></div>
+        </div>
+      </section>
+
+      <div class="foot">Reflex Blu Lettershop &middot; Production Benchmarks &middot; Updated 9/7/2016 (added inserting) &middot; 5/16/2017 (added letter with insert)</div>
+    </div>
+  </main>
+
+<script>
+(function(){
+  // Benchmarks (from the Reflex Blu Lettershop production benchmarks sheet)
+  var DEF={print:1400,coat:3000,fold:7500,ins1:3500,ins2:3000,hpd:8,
+           coatSetup:0.75,foldSetup:0.75,insSetup:0.25,cutPct:0.8};
+  var B=JSON.parse(JSON.stringify(DEF));
+  var on={print:true,coat:true,cut:true,fold:true,ins1:false,ins2:false};
+  var $=function(i){return document.getElementById(i)};
+  var fmt=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})};
+  var num=function(s){var n=parseFloat(String(s).replace(/[^0-9.]/g,''));return isFinite(n)?n:NaN};
+  var hm=function(h){var m=Math.round(h*60);return Math.floor(m/60)+':'+('0'+(m%60)).slice(-2)};
+  var days=function(h){return Math.round((h/B.hpd)*100)/100};
+
+  function compute(q,u){
+    var sheets=q/u;
+    var r={};
+    r.print=sheets/B.print;
+    r.coat=sheets/B.coat+B.coatSetup;
+    r.cut=B.cutPct*r.coat;
+    r.fold=q/B.fold+B.foldSetup;
+    r.ins1=q/B.ins1+B.insSetup;
+    r.ins2=q/B.ins2+B.insSetup;
+    return {sheets:sheets,r:r};
+  }
+
+  var OPS=[
+    {k:'print',g:'Press',n:'Print time',d:function(){return 'HP Indigo 7600 &ndash; '+fmt(B.print)+' sheets per hour'}},
+    {k:'coat',g:'Finishing',n:'Coat time',d:function(){return 'UV coating &ndash; '+fmt(B.coat)+' sheets per hour + 45 min setup/cleanup'}},
+    {k:'cut',n:'Cut time',d:function(){return 'Cutting &ndash; '+Math.round(B.cutPct*100)+'% of coating time (dependent on saturation)'}},
+    {k:'fold',n:'Fold time',d:function(){return 'Folding &ndash; '+fmt(B.fold)+' pieces per hour + 45 min setup'}},
+    {k:'ins1',g:'Inserting',n:'Inserting &ndash; letter only (#10)',d:function(){return fmt(B.ins1)+' pieces per hour + 15 min setup'}},
+    {k:'ins2',n:'Inserting &ndash; letter w/ insert (#10)',d:function(){return fmt(B.ins2)+' pieces per hour + 15 min setup'}}
+  ];
+
+  function render(){
+    var q=num($('qty').value),u=num($('ups').value);
+    var ready=q>0&&u>0;
+    var raw1=$('qty').value.trim(),raw2=$('ups').value.trim();
+    $('qty').classList.toggle('bad',raw1!==''&&!(q>0));
+    $('ups').classList.toggle('bad',raw2!==''&&!(u>0));
+    var m=$('msg');
+    m.innerHTML=(raw1!==''&&!(q>0))||(raw2!==''&&!(u>0))?'<div class="errbox">Enter a number greater than zero for quantity and units per sheet.</div>':'';
+    $('st2').classList.toggle('locked',!ready);
+    $('st1').classList.toggle('done',ready);
+    renderBM();
+    if(!ready)return;
+    var c=compute(q,u),r=c.r;
+    var total=0;OPS.forEach(function(o){if(on[o.k])total+=r[o.k]});
+    $('tiles').innerHTML=
+      '<div class="tile"><div class="k">Mail pieces</div><div class="v">'+fmt(q)+'</div><div class="u">'+u+'-up</div></div>'+
+      '<div class="tile"><div class="k">Sheets</div><div class="v">'+fmt(Math.ceil(c.sheets))+'</div><div class="u">'+fmt(q)+' &divide; '+u+'</div></div>'+
+      '<div class="tile hl"><div class="k">Total to budget</div><div class="v">'+fmt(total,2)+' hrs</div><div class="u">'+hm(total)+' &middot; '+fmt(days(total),2)+' days @ '+B.hpd+' hr/day</div></div>';
+    var h='';
+    OPS.forEach(function(o){
+      if(o.g)h+='<tr class="group"><td colspan="5">'+o.g+'</td></tr>';
+      var v=r[o.k];
+      h+='<tr class="'+(on[o.k]?'':'off')+'"><td><input type="checkbox" data-k="'+o.k+'"'+(on[o.k]?' checked':'')+' aria-label="Include '+o.k+'"></td>'+
+        '<td><b>'+o.n+'</b><span>'+o.d()+'</span></td>'+
+        '<td class="hrs">'+fmt(v,2)+'</td><td>'+hm(v)+'</td><td>'+fmt(days(v),2)+'</td></tr>';
+    });
+    h+='<tr class="total"><td></td><td style="text-align:left">Total (checked operations)</td><td>'+fmt(total,2)+'</td><td>'+hm(total)+'</td><td>'+fmt(days(total),2)+'</td></tr>';
+    $('rows').innerHTML=h;
+    $('sheetNote').innerHTML='Print, coat and cut run on <b>sheets</b> (quantity &divide; ups). Folding and inserting run on <b>mail pieces</b>. Days are hours &divide; '+B.hpd+' hours per day, rounded to 2 decimals.';
+    window._last={q:q,u:u,c:c,total:total};
+  }
+
+  function renderBM(){
+    var el=$('bm');
+    if(el.dataset.built)return;el.dataset.built=1;
+    var rows=[
+      ['print','HP Indigo 7600','sheets per hour (1,800 EPM; 1,400 4cp)'],
+      ['coat','UV coating','sheets per hour + 45 minutes setup/cleanup'],
+      ['fold','Folding','pieces per hour + 45 minutes setup'],
+      ['ins1','Inserting &ndash; letter only','pieces per hour + 15 minutes setup'],
+      ['ins2','Inserting &ndash; letter w/ insert','pieces per hour + 15 minutes setup'],
+      ['hpd','Hours per day','used to convert hours to days']
+    ];
+    el.innerHTML=rows.map(function(x){return '<div class="bm"><span class="n">'+x[1]+'</span><input class="field sm" data-b="'+x[0]+'" value="'+fmt(B[x[0]])+'" inputmode="numeric"><span class="d">'+x[2]+'</span></div>'}).join('')+
+      '<div><button class="btn ghost" id="bmReset" type="button">Restore default benchmarks</button></div>';
+    el.addEventListener('input',function(e){var k=e.target.dataset.b;if(!k)return;var v=num(e.target.value);if(v>0){B[k]=v;if(k==='print')syncSeg();render()}});
+    $('bmReset').onclick=function(){B=JSON.parse(JSON.stringify(DEF));el.dataset.built='';el.innerHTML='';syncSeg();render()};
+  }
+  function syncSeg(){
+    [].forEach.call($('rateSeg').children,function(b){b.classList.toggle('on',+b.dataset.r===B.print)});
+    var i=document.querySelector('[data-b=print]');if(i)i.value=fmt(B.print);
+  }
+
+  ['qty','ups'].forEach(function(id){
+    $(id).addEventListener('input',function(){
+      if(id==='qty'){var d=this.value.replace(/[^0-9]/g,'');var pos=this.value.length;this.value=d?Number(d).toLocaleString('en-US'):''}
+      render();
+    });
+  });
+  $('rateSeg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;B.print=+b.dataset.r;syncSeg();render()});
+  $('rows').addEventListener('change',function(e){var k=e.target.dataset.k;if(!k)return;on[k]=e.target.checked;
+    if(k==='ins1'&&on.ins1)on.ins2=false; if(k==='ins2'&&on.ins2)on.ins1=false; render()});
+  $('reset').onclick=function(){$('qty').value='';$('ups').value='';B=JSON.parse(JSON.stringify(DEF));
+    on={print:true,coat:true,cut:true,fold:true,ins1:false,ins2:false};
+    var el=$('bm');el.dataset.built='';el.innerHTML='';syncSeg();render();$('qty').focus()};
+  $('print').onclick=function(){window.print()};
+  $('copy').onclick=function(){
+    var L=window._last;if(!L)return;
+    var t=['Lettershop production estimate','Quantity: '+fmt(L.q)+' pieces, '+L.u+'-up ('+fmt(Math.ceil(L.c.sheets))+' sheets)',''];
+    OPS.forEach(function(o){if(on[o.k])t.push(o.n.replace(/&ndash;/g,'-')+': '+fmt(L.c.r[o.k],2)+' hrs ('+hm(L.c.r[o.k])+')')});
+    t.push('','Total to budget: '+fmt(L.total,2)+' hrs ('+fmt(days(L.total),2)+' days @ '+B.hpd+' hr/day)');
+    var s=t.join('\n');
+    function done(){$('copied').textContent='Copied.';setTimeout(function(){$('copied').textContent=''},1800)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done,function(){fallback(s,done)})}else fallback(s,done);
+  };
+  function fallback(s,cb){var a=document.createElement('textarea');a.value=s;document.body.appendChild(a);a.select();try{document.execCommand('copy');cb()}catch(e){}document.body.removeChild(a)}
+  render();
+})();
+</script>
+</body>
+</html>
